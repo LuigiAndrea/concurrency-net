@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Concurrency Tasks</h2>
+        <p>Asynchronous method to Synchronous result</p>
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="GetFromResult">Task FromResult</a></li>
+            <li><a asp-action="GetTCS">Task Completion Source</a></li>
+        </ul>
+        <p>Simple Retry mechanism using asynchronous programming</p>
+            <ul>
+                <li><a asp-action="Retry">Retry</a></li>
+            </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>Result</h2>
+         <span>@ViewData["Result"]</span>
+    </div>
+</div>

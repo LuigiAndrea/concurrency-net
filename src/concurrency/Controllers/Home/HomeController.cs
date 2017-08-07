@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using static concurrency.services.AsynchToSynch;
+using static concurrency.services.Retry;
+using concurrency.Models;
+
+namespace concurrency.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public ViewResult GetTCS()
+        {
+            ViewData["Result"] = GetValueAsync().Result;
+            return View("Index");
+        }
+
+        public ViewResult GetFromResult()
+        {
+            ViewData["Result"] = GetResultValueAsync().Result;
+            return View("Index");
+        }
+
+        [HttpPost]
+        public async Task<ViewResult> DownloadWithRetry(Retry r)
+        {
+            try
+            {
+                ViewData["Result"] = await DownloadStringWithRetries(r.fail);
+            }
+            catch (Exception ex)
+            {
+                ViewData["Result"] = $"Retried three times:  {ex.Message}";
+            }
+            return View("Index");
+        }
+
+        public IActionResult Retry()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+    }
+}

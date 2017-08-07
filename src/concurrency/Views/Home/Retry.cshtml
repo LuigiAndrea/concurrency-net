@@ -1,0 +1,16 @@
+@model Retry
+
+@{
+    ViewData["Title"] = "Retry";
+}
+
+<h2>Simulation of a simple retry using Task.Delay</h2>
+
+<form asp-action="DownloadWithRetry" method="POST">
+ <div class="checkbox">
+    <label asp-for="fail">
+        <input asp-for="fail" type="checkbox" /> Do you want the download to Fail? 
+    </label>
+</div>
+<button type="submit">Run the Retry</button>
+</form>
