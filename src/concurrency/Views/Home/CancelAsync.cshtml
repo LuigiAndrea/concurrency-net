@@ -1,9 +1,22 @@
+@model CancelAsync
+
 @{
     ViewData["Title"] = "Cancel Async Code";
 }
 
 <h3>Press the buttons to start and cancel the process.</h3>
-<h5>After three seconds the process automatically get terminated</h5>
+<h5>The Times are expressed as seconds, the process get automatically terminated after the timeout expired.</h5>
 
-<button type="button" class="btn btn-default" onclick="location.href='@Url.Action("StartAsyncCode", "Home")'">Start</button>
+ <form asp-action="StartAsyncCode" method="POST">
+<div class="form-group">
+    <label asp-for="delayCompleteTask">Time to complete the Task</label>
+    <input asp-for="delayCompleteTask" type="number" class="form-control" placeholder="Time to complete the Task" min="1" max="10" value="3" required>
+</div> 
+<div class="form-group">
+    <label asp-for="delayCancelTask">Timeout to cancel the Task</label>
+    <input asp-for="delayCancelTask" type="number" class="form-control" placeholder="Timeout" min="1" max="10" value="2" required>
+</div> 
+<button type="submit" class="btn btn-default">Start</button>
 <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("CancelAsyncCode", "Home")'">Cancel </button>
+</form>
+

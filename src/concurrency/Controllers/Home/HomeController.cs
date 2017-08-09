@@ -50,10 +50,10 @@ namespace concurrency.Controllers
             return View();
         }
 
-        public async Task<ViewResult> StartAsyncCode()
+        public async Task<ViewResult> StartAsyncCode(CancelAsync ca)
         {          
             CancelAsyncService c = new CancelAsyncService();
-            ViewData["Result"] = await c.Start();
+            ViewData["Result"] = await c.Start(ca.delayCompleteTask,ca.delayCancelTask);
             return View("Index");
         }
         public ViewResult CancelAsyncCode()

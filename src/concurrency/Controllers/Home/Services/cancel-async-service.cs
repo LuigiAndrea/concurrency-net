@@ -8,10 +8,12 @@ namespace concurrency.services
     public class CancelAsyncService
     {
         private CancellationTokenSource cts = new CancellationTokenSource();
-        private const int delayBeforeCancelTest = 4;
-        private const int delayBeforeFinishTest = 7; 
-        internal async Task<string> Start()
+        private int delayBeforeFinishTest, delayBeforeCancelTest; 
+        internal async Task<string> Start(int completeTask,int timeoutTask)
         {
+            delayBeforeFinishTest = completeTask;
+            delayBeforeCancelTest = timeoutTask;
+
             string result=string.Empty;
             try
             {
@@ -25,7 +27,7 @@ namespace concurrency.services
             }
             catch (OperationCanceledException)
             {
-                result = "Operation Cancelled by timeout";
+                result = $"Operation Cancelled by timeout after {delayBeforeCancelTest} {(delayBeforeCancelTest > 1  ? "seconds":"second")}";
             }
             catch (Exception)
             {
@@ -41,10 +43,10 @@ namespace concurrency.services
             return "Operation cancel by user";
         }
 
-        public static async Task<string> TestAsync(CancellationToken ct)
+        public async Task<string> TestAsync(CancellationToken ct)
         {
-            await Task.Delay(TimeSpan.FromSeconds(delayBeforeFinishTest), ct);
-            return $"Task Completed after {delayBeforeFinishTest}";
+            await Task.Delay(TimeSpan.FromSeconds(delayBeforeFinishTest), ct).ConfigureAwait(false);
+            return $"Task Completed after {delayBeforeFinishTest} {(delayBeforeFinishTest > 1  ? "seconds":"second")}";
         }
     }
 }
