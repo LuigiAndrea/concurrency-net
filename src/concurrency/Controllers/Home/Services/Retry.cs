@@ -5,29 +5,34 @@ using c = concurrency.Controllers.HomeController;
 
 namespace concurrency.services
 {
-    public static class Retry
+    public class Retry
     {
         const int delay = 1;
         const double timeoutFail = 0.5;
+        const int defaultNumberOfRetry = 3;
+        const string str = "String downloaded";
+        public int numberOfRetry{ get; private set;}
 
-        private static async Task<string> getStringAsync(int val, string str, CancellationToken cancelation)
+        public Retry(int retry) => numberOfRetry = (retry >= 1 && retry<=10) ? retry : defaultNumberOfRetry;
+
+        private async Task<string> getStringAsync(int val, string str, CancellationToken cancelation)
         {
             await Task.Delay(TimeSpan.FromSeconds(val), cancelation).ConfigureAwait(false);
             return str;
         }
 
-        internal static async Task<string> DownloadStringWithRetries(bool fail)
+        internal async Task<string> DownloadStringWithRetries(bool fail)
         {
             CancellationToken token = (fail) ? new CancellationTokenSource(TimeSpan.FromSeconds(timeoutFail)).Token
                                              : CancellationToken.None;
-            const string str = "String downloaded";
-            // Retry after 1 second, then after 2 seconds, then 4.
+
             var nextDelay = TimeSpan.FromSeconds(1);
-            for (int i = 0; i != 3; ++i)
+
+            for (int i = 0; i != numberOfRetry; ++i)
             {
                 try
                 {
-                    return await getStringAsync(delay, str, token);
+                     return await getStringAsync(delay, str, token);
                 }
                 catch
                 {

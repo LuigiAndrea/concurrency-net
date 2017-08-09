@@ -4,13 +4,18 @@
     ViewData["Title"] = "Retry";
 }
 
-<h2>Simulation of a simple retry using Task.Delay</h2>
+<h3>Simulation of a simple retry using Task.Delay. Default Retry is 3</h3>
 
 <form asp-action="DownloadWithRetry" method="POST">
- <div class="checkbox">
+<div class="checkbox">
     <label asp-for="fail">
         <input asp-for="fail" type="checkbox" /> Do you want the download to Fail? 
     </label>
 </div>
-<button type="submit">Run the Retry</button>
+<div class="form-group">
+    <label asp-for="numberOfRetry">Number of retry</label>
+    <input asp-for="numberOfRetry" type="number" class="form-control" placeholder="Number of retry" min="1" max="10" value="3">
+</div>
+
+<button type="submit">Run Retry</button>
 </form>

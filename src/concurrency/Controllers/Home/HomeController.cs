@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using static concurrency.services.AsynchToSynch;
-using static concurrency.services.Retry;
+using RetryService = concurrency.services.Retry;
 using concurrency.Models;
 
 namespace concurrency.Controllers
@@ -32,19 +32,25 @@ namespace concurrency.Controllers
         [HttpPost]
         public async Task<ViewResult> DownloadWithRetry(Retry r)
         {
+            RetryService retry = new RetryService(r.numberOfRetry);
+
             try
-            {
-                ViewData["Result"] = await DownloadStringWithRetries(r.fail);
+            {              
+                ViewData["Result"] = await retry.DownloadStringWithRetries(r.fail);
             }
             catch (Exception ex)
             {
-                ViewData["Result"] = $"Retried three times:  {ex.Message}";
+                ViewData["Result"] = $"Retried {(retry.numberOfRetry>1 ? retry.numberOfRetry + " times" : retry.numberOfRetry + " time")}: {ex.Message}";
             }
             return View("Index");
         }
 
         public IActionResult Retry()
         {
+            return View();
+        }
+
+        public IActionResult CancelAsync(){
             return View();
         }
 
