@@ -4,18 +4,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using static concurrency.services.AsynchToSynch;
-using RetryService = concurrency.services.Retry;
+using concurrency.services;
 using concurrency.Models;
 
 namespace concurrency.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         public ViewResult GetTCS()
         {
@@ -29,40 +27,45 @@ namespace concurrency.Controllers
             return View("Index");
         }
 
+        public IActionResult Retry() => View();
+
         [HttpPost]
         public async Task<ViewResult> DownloadWithRetry(Retry r)
         {
             RetryService retry = new RetryService(r.numberOfRetry);
 
             try
-            {              
+            {
                 ViewData["Result"] = await retry.DownloadStringWithRetries(r.fail);
             }
             catch (Exception ex)
             {
-                ViewData["Result"] = $"Retried {(retry.numberOfRetry>1 ? retry.numberOfRetry + " times" : retry.numberOfRetry + " time")}: {ex.Message}";
+                ViewData["Result"] = $"Retried {(retry.numberOfRetry > 1 ? retry.numberOfRetry + " times" : retry.numberOfRetry + " time")} with a total delay between calls of {retry.nextDelay} : {ex.Message}";
             }
             return View("Index");
         }
 
-        public IActionResult Retry()
+        public IActionResult CancelAsync()
         {
             return View();
         }
 
-        public IActionResult CancelAsync(){
-            return View();
+        public ViewResult StartAsyncCode()
+        {
+            CancelAsync c = new CancelAsync();
+            c.Start();
+            return View("Index");
+        }
+        public ViewResult CancelAsyncCode()
+        {
+            CancelAsync c = new CancelAsync();
+            c.Cancel();
+            return View("Index");
         }
 
-        public IActionResult About()
-        {
-            return View();
-        }
+        public IActionResult About() => View();
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
+        public IActionResult Contact() => View();
 
         public IActionResult Error()
         {

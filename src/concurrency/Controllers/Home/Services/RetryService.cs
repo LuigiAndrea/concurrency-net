@@ -5,15 +5,16 @@ using c = concurrency.Controllers.HomeController;
 
 namespace concurrency.services
 {
-    public class Retry
+    public class RetryService
     {
         const int delay = 1;
         const double timeoutFail = 0.5;
         const int defaultNumberOfRetry = 3;
         const string str = "String downloaded";
         public int numberOfRetry{ get; private set;}
+        public TimeSpan nextDelay { get; private set; }
 
-        public Retry(int retry) => numberOfRetry = (retry >= 1 && retry<=10) ? retry : defaultNumberOfRetry;
+        public RetryService(int retry) => numberOfRetry = (retry >= 1 && retry<=10) ? retry : defaultNumberOfRetry;
 
         private async Task<string> getStringAsync(int val, string str, CancellationToken cancelation)
         {
@@ -26,7 +27,7 @@ namespace concurrency.services
             CancellationToken token = (fail) ? new CancellationTokenSource(TimeSpan.FromSeconds(timeoutFail)).Token
                                              : CancellationToken.None;
 
-            var nextDelay = TimeSpan.FromSeconds(1);
+            nextDelay = TimeSpan.FromSeconds(1);
 
             for (int i = 0; i != numberOfRetry; ++i)
             {

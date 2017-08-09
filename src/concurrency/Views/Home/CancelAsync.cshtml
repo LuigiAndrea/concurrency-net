@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = "Cancel Async Code";
+}
+
+<h3>Press the buttons to start and cancel the process.</h3>
+<h5>After three seconds the process automatically get terminated</h5>
+
+<button type="button" class="btn btn-default" onclick="location.href='@Url.Action("StartAsyncCode", "Home")'">Start</button>
+<button type="button" class="btn btn-default" onclick="location.href='@Url.Action("CancelAsyncCode", "Home")'">Cancel </button>
