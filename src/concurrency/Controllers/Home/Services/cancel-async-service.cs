@@ -5,49 +5,46 @@ using System.Threading.Tasks;
 
 namespace concurrency.services
 {
-    public class CancelAsync
+    public class CancelAsyncService
     {
-        private CancellationTokenSource cts;
+        private CancellationTokenSource cts = new CancellationTokenSource();
         private const int delayBeforeCancelTest = 4;
         private const int delayBeforeFinishTest = 7; 
-        internal async void Start()
+        internal async Task<string> Start()
         {
+            string result=string.Empty;
             try
             {
-                cts = new CancellationTokenSource();
                 CancellationToken token = cts.Token;
                 using (cts = CancellationTokenSource.CreateLinkedTokenSource(token))
                 {
                     cts.CancelAfter(TimeSpan.FromSeconds(delayBeforeCancelTest));
                     CancellationToken combinedToken = cts.Token;
-                    int r = await TestAsync(combinedToken);
-                    Debug.WriteLine(r);
+                    result = await TestAsync(combinedToken).ConfigureAwait(false);
                 }
             }
             catch (OperationCanceledException)
             {
-                Debug.WriteLine("Operation Cancelled");
+                result = "Operation Cancelled by timeout";
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                // this.start.IsEnabled = true;
-                // this.cancel.IsEnabled = false;
-            }
+
+            return result;
         }
 
-        internal void Cancel()
+        internal string Cancel()
         {
             this.cts.Cancel();
+            return "Operation cancel by user";
         }
 
-        public static async Task<int> TestAsync(CancellationToken ct)
+        public static async Task<string> TestAsync(CancellationToken ct)
         {
             await Task.Delay(TimeSpan.FromSeconds(delayBeforeFinishTest), ct);
-            return 122;
+            return $"Task Completed after {delayBeforeFinishTest}";
         }
     }
 }

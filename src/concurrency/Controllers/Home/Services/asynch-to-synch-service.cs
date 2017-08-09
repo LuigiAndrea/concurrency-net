@@ -3,7 +3,7 @@ using c = concurrency.Controllers.HomeController;
 
 namespace concurrency.services
 {
-    public static class AsynchToSynch
+    public static class AsynchToSynchService
     {
         internal static Task<string> GetValueAsync()
         {

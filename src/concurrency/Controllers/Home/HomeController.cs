@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using static concurrency.services.AsynchToSynch;
+using static concurrency.services.AsynchToSynchService;
 using concurrency.services;
 using concurrency.Models;
 
@@ -50,16 +50,16 @@ namespace concurrency.Controllers
             return View();
         }
 
-        public ViewResult StartAsyncCode()
-        {
-            CancelAsync c = new CancelAsync();
-            c.Start();
+        public async Task<ViewResult> StartAsyncCode()
+        {          
+            CancelAsyncService c = new CancelAsyncService();
+            ViewData["Result"] = await c.Start();
             return View("Index");
         }
         public ViewResult CancelAsyncCode()
         {
-            CancelAsync c = new CancelAsync();
-            c.Cancel();
+            CancelAsyncService c = new CancelAsyncService();
+            ViewData["Result"] = c.Cancel();
             return View("Index");
         }
 
