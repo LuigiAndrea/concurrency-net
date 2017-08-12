@@ -18,6 +18,10 @@
             <ul>
                 <li><a asp-action="CancelAsync">CreateLinkedTokenSource</a></li>
             </ul>
+        <p>Check periodically if a token has been cancelled</p>
+            <ul>
+                <li><a asp-action="CancellationTokenLoop">ThrowIfCancellationRequested</a></li>
+            </ul>
     </div>
     <div class="col-md-6">
         <h2>Result</h2>

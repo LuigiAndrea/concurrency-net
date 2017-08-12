@@ -45,21 +45,30 @@ namespace concurrency.Controllers
             return View("Index");
         }
 
-        public IActionResult CancelAsync()
-        {
-            return View();
-        }
+        public IActionResult CancelAsync() => View();
 
+
+        [HttpPost]
         public async Task<ViewResult> StartAsyncCode(CancelAsync ca)
-        {          
+        {
             CancelAsyncService c = new CancelAsyncService();
-            ViewData["Result"] = await c.Start(ca.delayCompleteTask,ca.delayCancelTask);
+            ViewData["Result"] = await c.Start(ca.delayCompleteTask, ca.delayCancelTask);
             return View("Index");
         }
         public ViewResult CancelAsyncCode()
         {
             CancelAsyncService c = new CancelAsyncService();
             ViewData["Result"] = c.Cancel();
+            return View("Index");
+        }
+
+        public IActionResult CancellationTokenLoop() => View();
+
+        [HttpPost]
+        public async Task<ViewResult> CancellationTokenLoop(CancellationLoop cancLoop)
+        {
+            CancellationTokenLoop ctl = new CancellationTokenLoop();
+            ViewData["Result"] = await ctl.startLoop(cancLoop.timeoutCancellationToken);
             return View("Index");
         }
 
