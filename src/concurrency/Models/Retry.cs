@@ -2,7 +2,8 @@ namespace concurrency.Models
 {
     public class Retry
     {
-        public bool fail { get; set; }
-        public int numberOfRetry { get; set; }
+        public int NumberOfRetry { get; set; }
+        public int DelayForANewRetry { get; set; }
+        public double TimeoutBeforeFail { get; set; }
     }
 }

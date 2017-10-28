@@ -1,50 +1,55 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using c = concurrency.Controllers.HomeController;
+using static concurrency.services.RetryUtilities;
 
 namespace concurrency.services
 {
-    public class RetryService
+    internal class RetryService
     {
-        const int delay = 1;
-        const double timeoutFail = 0.5;
-        const int defaultNumberOfRetry = 3;
-        const string str = "String downloaded";
-        public int numberOfRetry{ get; private set;}
-        public TimeSpan nextDelay { get; private set; }
-
-        public RetryService(int retry) => numberOfRetry = (retry >= 1 && retry<=10) ? retry : defaultNumberOfRetry;
-
-        private async Task<string> getStringAsync(int val, string str, CancellationToken cancelation)
-        {
-            await Task.Delay(TimeSpan.FromSeconds(val), cancelation).ConfigureAwait(false);
-            return str;
+        int delayBetweenRetry;
+        double timeoutFail;
+        const string value = "Value downloaded";
+        internal int NumberOfRetry { get; private set; }
+        internal TimeSpan NextDelay { get; private set; }
+  
+        public RetryService(int retry, int delay, double timeout){
+            NumberOfRetry = retry;
+            delayBetweenRetry = delay;
+            timeoutFail = timeout;
         }
 
-        internal async Task<string> DownloadStringWithRetries(bool fail)
+        internal async Task<string> DownloadStringWithRetries()
         {
-            CancellationToken token = (fail) ? new CancellationTokenSource(TimeSpan.FromSeconds(timeoutFail)).Token
-                                             : CancellationToken.None;
+            CancellationToken token = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutFail)).Token;
 
-            nextDelay = TimeSpan.FromSeconds(1);
+            NextDelay = TimeSpan.FromSeconds(delayBetweenRetry);
 
-            for (int i = 0; i != numberOfRetry; ++i)
+            for (int i = 0; i != NumberOfRetry; ++i)
             {
                 try
                 {
-                     return await getStringAsync(delay, str, token);
+                    return await GetValueAsync(delayBetweenRetry, value, token);
                 }
                 catch
                 {
 
                 }
 
-                await Task.Delay(nextDelay);
-                nextDelay = nextDelay + nextDelay;
+                await Task.Delay(NextDelay);
+                NextDelay = NextDelay + NextDelay;
             }
             // Try one last time, allowing the error to propogate.
-            return await getStringAsync(delay, str, token);
+            return await GetValueAsync(delayBetweenRetry, value, token);
+        }
+    }
+
+    internal static class RetryUtilities
+    {
+        internal static async Task<T> GetValueAsync<T>(int val, T value, CancellationToken cancelation)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(val), cancelation).ConfigureAwait(false);
+            return value;
         }
     }
 }

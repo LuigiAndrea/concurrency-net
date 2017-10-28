@@ -32,15 +32,17 @@ namespace concurrency.Controllers
         [HttpPost]
         public async Task<ViewResult> DownloadWithRetry(Retry r)
         {
-            RetryService retry = new RetryService(r.numberOfRetry);
+            RetryService retry = new RetryService(r.NumberOfRetry, r.DelayForANewRetry, r.TimeoutBeforeFail);
 
             try
             {
-                ViewData["Result"] = await retry.DownloadStringWithRetries(r.fail);
+                ViewData["Result"] = await retry.DownloadStringWithRetries();
             }
             catch (Exception ex)
             {
-                ViewData["Result"] = $"Retried {(retry.numberOfRetry > 1 ? retry.numberOfRetry + " times" : retry.numberOfRetry + " time")} with a total delay between calls of {retry.nextDelay} : {ex.Message}";
+                ViewData["Result"] =
+                    $"Retried {(retry.NumberOfRetry > 1 ? retry.NumberOfRetry + " times" : retry.NumberOfRetry + " time")}" +
+                    $" with a total delay between calls of {retry.NextDelay.Subtract(TimeSpan.FromSeconds(r.DelayForANewRetry))}. {ex.Message}";
             }
             return View("Index");
         }

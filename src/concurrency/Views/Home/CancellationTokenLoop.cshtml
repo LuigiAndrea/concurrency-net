@@ -7,7 +7,7 @@
 <h3>Cancellation Token to terminate a loop</h3>
 <h5>The Timeout is expressed in seconds, the loop get automatically terminated after the timeout expired.</h5>
 
- <form asp-action="CancellationTokenLoop" method="POST">
+<form asp-action="CancellationTokenLoop" method="POST">
 <div class="form-group">
     <label asp-for="timeoutCancellationToken">Timeout before requesting cancellation (In seconds)</label>
     <input asp-for="timeoutCancellationToken" type="number" class="form-control" placeholder="Timeout" step=0.1 min="0.1" max="10" value="1" required>
