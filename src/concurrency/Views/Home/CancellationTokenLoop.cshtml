@@ -9,8 +9,8 @@
 
 <form asp-action="CancellationTokenLoop" method="POST">
 <div class="form-group">
-    <label asp-for="timeoutCancellationToken">Timeout before requesting cancellation (In seconds)</label>
-    <input asp-for="timeoutCancellationToken" type="number" class="form-control" placeholder="Timeout" step=0.1 min="0.1" max="10" value="1" required>
+    <label asp-for="TimeoutCancellationToken">Timeout before requesting cancellation (In seconds)</label>
+    <input asp-for="TimeoutCancellationToken" type="number" class="form-control" placeholder="Timeout" step=0.1 min="0.1" max="10" value="1" required>
 </div> 
 <button type="submit" class="btn btn-default">Start Loop</button>
 </form>

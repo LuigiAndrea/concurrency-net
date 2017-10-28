@@ -6,7 +6,7 @@ namespace concurrency.services
 {
     public class CancellationTokenLoop
     {
-        public async Task<string> startLoop(double timeout)
+        public async Task<string> StartLoop(double timeout)
         {
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
             var token = cts.Token;
