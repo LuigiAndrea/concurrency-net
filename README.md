@@ -11,7 +11,7 @@ List of recipes on concurrency and asyncronous programming in c#.
 
 ### Prerequisitest
 
-You need to have installed .NET Core 1.1 on your machine.
+You need to have installed .NET Core on your machine.
 Verify your version running dotnet --version in a terminal/console window.
 
 ### Build and Run
