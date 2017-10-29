@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using static concurrency.services.AsynchToSynchService;
+using static concurrency.services.AggregateExceptionService;
 using concurrency.services;
 using concurrency.Models;
 
@@ -49,7 +50,6 @@ namespace concurrency.Controllers
 
         public IActionResult CancelAsync() => View();
 
-
         [HttpPost]
         public async Task<ViewResult> StartAsyncCode(CancelAsync ca)
         {
@@ -71,6 +71,16 @@ namespace concurrency.Controllers
         {
             CancellationTokenLoop ctl = new CancellationTokenLoop();
             ViewData["Result"] = await ctl.StartLoop(cancLoop.TimeoutCancellationToken);
+            return View("Index");
+        }
+
+        public IActionResult AggregationException() => View();
+
+        [HttpPost]
+        public async Task<ViewResult> AggregationException(AggregationExceptions ae)
+        {
+            ViewData["Result"] = await GetExceptions(ae.CatchException.Equals("All") 
+                                                            ? CatchExc.All : CatchExc.One);
             return View("Index");
         }
 

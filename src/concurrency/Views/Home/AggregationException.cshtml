@@ -1,0 +1,21 @@
+@model AggregationExceptions;
+
+@{
+    ViewData["Title"] = "Aggregation Exceptions";
+}
+<h3>Aggregation Exceptions</h3>
+
+<form asp-action="AggregationException" method="POST">
+<div class="form-group">
+    <div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-primary active">
+    <input name="CatchException" id="ExcpAll" value="All" type="radio"  checked>Catch all exceptions
+    </label>
+    <label class="btn btn-primary">
+    <input name="CatchException" id="ExcpOne" value="One" type="radio" >Catch one exception
+    </label>
+    </div>
+</div> 
+<button type="submit" class="btn btn-default">Run Exceptions</button>
+</form>
+</div>
