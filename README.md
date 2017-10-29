@@ -8,6 +8,7 @@ List of recipes on concurrency and asyncronous programming in c#.
 - Simple retry mechanism simulated with Task.Delay and CancellationToken
 - CreateLinkedTokenSource
 - ThrowIfCancellationRequested
+- Aggregate Exceptions
 
 ### Prerequisitest
 
