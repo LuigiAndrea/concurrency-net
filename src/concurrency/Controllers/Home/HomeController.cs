@@ -70,7 +70,7 @@ namespace concurrency.Controllers
         public async Task<ViewResult> CancellationTokenLoop(CancellationLoop cancLoop)
         {
             CancellationTokenLoop ctl = new CancellationTokenLoop();
-            ViewData["Result"] = await ctl.StartLoop(cancLoop.TimeoutCancellationToken);
+            ViewData["Result"] = await ctl.StartLoop(cancLoop.TimeoutCancellationToken,cancLoop.NumberOfIterationToPerformLoop);
             return View("Index");
         }
 
