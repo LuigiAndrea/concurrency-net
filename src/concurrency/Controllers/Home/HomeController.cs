@@ -16,15 +16,15 @@ namespace concurrency.Controllers
     {
         public IActionResult Index() => View();
 
-        public ViewResult GetTCS()
-        {
-            ViewData["Result"] = GetValueAsync().Result;
-            return View("Index");
-        }
-
         public ViewResult GetFromResult()
         {
             ViewData["Result"] = GetResultValueAsync().Result;
+            return View("Index");
+        }
+
+        public ViewResult GetTaskCompletionSource()
+        {
+            ViewData["Result"] = GetTaskCompletionSourceValueAsync().Result;
             return View("Index");
         }
 
