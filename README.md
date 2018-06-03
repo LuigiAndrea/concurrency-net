@@ -1,4 +1,4 @@
-Concurrency (Examples in ASP.NET Core MVC)
+Concurrency (Examples in ASP.NET Core MVC).
 ===
 
 List of recipes on concurrency and asyncronous programming in c#. 
@@ -9,6 +9,7 @@ List of recipes on concurrency and asyncronous programming in c#.
 - CreateLinkedTokenSource
 - ThrowIfCancellationRequested
 - Aggregate Exceptions
+- Process Tasks as they complete
 
 ### Prerequisitest
 

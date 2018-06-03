@@ -1,4 +1,4 @@
-namespace concurrency.Models
+namespace concurrency.Models.Home
 {
     public class Retry
     {

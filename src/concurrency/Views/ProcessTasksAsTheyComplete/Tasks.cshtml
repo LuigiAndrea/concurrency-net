@@ -1,0 +1,34 @@
+@model TaskAndTime
+
+@{
+    ViewData["Title"] = "ProcessTaskAsTheyComplete";
+}
+
+<h3>Enter for each task the seconds needed to complete </h3>
+
+<form asp-action="Tasks" method="POST">
+
+<div class="form-group">
+    <label asp-for="TaskA.SecondsToComplete">Task A</label>
+    <input asp-for="TaskA.SecondsToComplete" type="number" class="form-control" placeholder="task A" min="1" max="10" step="1">
+</div>
+
+<div class="form-group">
+    <label asp-for="TaskB.SecondsToComplete">Task B</label>
+    <input asp-for="TaskB.SecondsToComplete" type="number" class="form-control" placeholder="Task B" min="1" max="10" step="1">
+</div>
+
+<div class="form-group">
+    <label asp-for="TaskC.SecondsToComplete">Task C</label>
+    <input asp-for="TaskC.SecondsToComplete" type="number" class="form-control" placeholder="Task C" min="1" max="10" step="1">
+</div>
+
+<button type="submit">Run Tasks</button>
+</form> 
+</br>
+<p>
+    <h4>@ViewBag.ForLoop</h4>
+    <b>@ViewData["Loop"]</b>
+    <h4>@ViewBag.InOrder</h4>
+    <b>@ViewData["AsTheyComplete"]</b>
+</p>

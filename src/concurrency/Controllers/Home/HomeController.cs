@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using static concurrency.services.AsynchToSynchService;
 using static concurrency.services.AggregateExceptionService;
 using concurrency.services;
-using concurrency.Models;
+using concurrency.Models.Home;
 
 namespace concurrency.Controllers
 {
