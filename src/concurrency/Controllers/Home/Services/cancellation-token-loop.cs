@@ -6,17 +6,20 @@ namespace concurrency.services
 {
     public class CancellationTokenLoop
     {
-        internal static long NumberOfIterationLoop {get; private set;} = 100000;
+        internal static long NumberOfIterationLoop {get; private set;}
         
         public async Task<string> StartLoop(double timeout,long numberOfIteration)
         {
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
-            var token = cts.Token;
-            NumberOfIterationLoop = numberOfIteration;
-            string result = string.Empty;
-
+            string result = string.Empty;       
+            
             try
-            {
+            { 
+                if(numberOfIteration.Equals(0)) //number bigger than long.MaxValue
+                    throw new OperationCanceledException();
+
+                var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
+                var token = cts.Token;
+                NumberOfIterationLoop = numberOfIteration;
                 result = await CancelableLoop(token);
 
             }
@@ -34,6 +37,7 @@ namespace concurrency.services
 
         private async Task<string> CancelableLoop(CancellationToken cancellationToken)
         {
+            
             for (int i = 0; i != NumberOfIterationLoop; ++i)
             {
                 //some work
