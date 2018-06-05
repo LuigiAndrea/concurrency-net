@@ -1,4 +1,4 @@
-namespace concurrency.Models.Home
+namespace Concurrency.Models.Home
 {
     public class AggregationExceptions
     {

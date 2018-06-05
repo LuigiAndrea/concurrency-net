@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace concurrency.services
+namespace Concurrency.Services.Home
 {
     public class CancellationTokenLoop
     {

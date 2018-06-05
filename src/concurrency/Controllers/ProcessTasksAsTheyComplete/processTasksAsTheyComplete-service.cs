@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using concurrency.Models.ProcessTasksAsTheyComplete;
+using Concurrency.Models.ProcessTasksAsTheyComplete;
 
-namespace concurrency.services
+namespace Concurrency.Services.ProcessTasksAsTheyComplete
 {
     public class ProcessTasksAsTheyCompleteSerivice
     {

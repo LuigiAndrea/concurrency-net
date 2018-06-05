@@ -5,12 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using static concurrency.services.AsynchToSynchService;
-using static concurrency.services.AggregateExceptionService;
-using concurrency.services;
-using concurrency.Models.Home;
+using static Concurrency.Services.Home.AsynchToSynchService;
+using static Concurrency.Services.Home.AggregateExceptionService;
+using Concurrency.Services.Home;
+using Concurrency.Models.Home;
 
-namespace concurrency.Controllers
+namespace Concurrency.Controllers
 {
     public class HomeController : Controller
     {

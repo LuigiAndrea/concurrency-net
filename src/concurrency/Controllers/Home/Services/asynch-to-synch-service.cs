@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using c = concurrency.Controllers.HomeController;
+using c = Concurrency.Controllers.HomeController;
 
-namespace concurrency.services
+namespace Concurrency.Services.Home
 {
     public static class AsynchToSynchService
     {

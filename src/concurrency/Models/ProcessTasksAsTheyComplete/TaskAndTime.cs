@@ -1,4 +1,4 @@
-namespace concurrency.Models.ProcessTasksAsTheyComplete
+namespace Concurrency.Models.ProcessTasksAsTheyComplete
 {
     public class TaskAndTime
     {

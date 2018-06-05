@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using static concurrency.services.RetryUtilities;
+using static Concurrency.Services.Home.RetryUtilities;
 
-namespace concurrency.services
+namespace Concurrency.Services.Home
 {
     internal class RetryService
     {

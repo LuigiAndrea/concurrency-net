@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace concurrency.services
+namespace Concurrency.Services.Home
 {
     public class CancelAsyncService
     {

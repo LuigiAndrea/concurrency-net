@@ -5,10 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using concurrency.services;
-using concurrency.Models.ProcessTasksAsTheyComplete;
+using Concurrency.Services.ProcessTasksAsTheyComplete;
+using Concurrency.Models.ProcessTasksAsTheyComplete;
 
-namespace concurrency.Controllers
+namespace Concurrency.Controllers
 {
     public class ProcessTasksAsTheyCompleteController : Controller
     {
