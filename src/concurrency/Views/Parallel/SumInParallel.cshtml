@@ -1,0 +1,40 @@
+@using Concurrency.Models.Parallel
+@model Concurrency.Models.Parallel.ParallelElement
+
+@{
+    ViewData["Title"] = "Parallel";
+    ParallelTime parallel = ViewData["ParallelResult"] as ParallelTime;
+}
+
+<h4>Enter number of elements in the list to process in parallel</h3>
+<p>A sum of all the elements of the list will be performed with three different approach: </p>
+<ol>
+    <li>Not in Parallel, regular sum</li>
+    <li>In Parallel, using AsParallel</li>
+    <li>In Parallel, using AsParallel with aggregation function</li>
+</ol>
+
+<form asp-action="SumInParallel" method="POST">
+
+<div class="form-group">
+    <label asp-for="NumberOfElements">Number of element to perform in parallel</label>
+    <input asp-for="NumberOfElements" type="number" class="form-control" placeholder="Number of elements in the list to sum" step="1" value="9000000" min="1" max="2000000000">
+</div>
+
+<button type="submit">Start</button>
+</form> 
+</br>
+<p>
+    <h4>@ViewBag.ParellSumRegular</h4> 
+    @if(parallel !=null){
+        <b>@parallel.ParallelSumRegular</b>
+        }      
+    <h4>@ViewBag.ParellSumAsParallel</h4>
+    @if(parallel !=null){
+        <b>@parallel.ParallelSumWithAsParallel</b>
+        }  
+    <h4>@ViewBag.ParellSumAsAggregate</h4>
+     @if(parallel !=null){
+        <b>@parallel.ParallelSumWithAggregate</b>
+        }  
+</p>
