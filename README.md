@@ -10,6 +10,8 @@ List of recipes on concurrency and asyncronous programming in c#.
 - ThrowIfCancellationRequested
 - Aggregate Exceptions
 - Process Tasks as they complete
+- Sum in Parallel
+
 
 ### Prerequisitest
 
