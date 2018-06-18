@@ -40,6 +40,7 @@ namespace Concurrency
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
                 app.UseBrowserLink();
             }
             else
