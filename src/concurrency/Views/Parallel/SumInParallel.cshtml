@@ -7,7 +7,7 @@
 }
 
 <h4>Enter number of elements in the list to process in parallel</h3>
-<p>A sum of all the elements of the list will be performed with three different approach: </p>
+<p>A sum of all the elements of the list will be performed with three different approaches: </p>
 <ol>
     <li>Not in Parallel, regular sum</li>
     <li>In Parallel, using AsParallel</li>
@@ -25,16 +25,14 @@
 </form> 
 </br>
 <p>
-    <h4>@ViewBag.ParellSumRegular</h4> 
-    @if(parallel !=null){
-        <b>@parallel.ParallelSumRegular ms</b> 
-        }      
-    <h4>@ViewBag.ParellSumAsParallel</h4>
-    @if(parallel !=null){
-        <b>@parallel.ParallelSumWithAsParallel ms</b> 
-        }  
-    <h4>@ViewBag.ParellSumAsAggregate</h4>
      @if(parallel !=null){
+        <h4>@ViewBag.ParellSumRegular</h4> 
+        <b>@parallel.ParallelSumRegular ms</b>
+        
+        <h4>@ViewBag.ParellSumAsParallel</h4>
+        <b>@parallel.ParallelSumWithAsParallel ms</b> 
+        
+        <h4>@ViewBag.ParellSumAsAggregate</h4>
         <b>@parallel.ParallelSumWithAggregate ms</b> 
         }  
 </p>
