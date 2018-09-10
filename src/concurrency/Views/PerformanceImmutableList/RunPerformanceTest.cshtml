@@ -1,0 +1,35 @@
+@using Concurrency.Models.PerfornabceImmutableList
+@model ImmutableListTest
+
+
+@{
+    ViewData["Title"] = "Performance for Immutable List";
+    PerformanceResult result = ViewData["PerformanceResult"] as PerformanceResult;
+}
+
+<h4>Enter number of elements of the loop</h3>
+<p>A simple assignment will be performed for every step in the loop using: </p>
+<ol>
+    <li>For</li>
+    <li>Foreach</li>
+</ol>
+
+<form asp-action="RunPerformanceTest" method="POST">
+
+<div class="form-group">
+    <label asp-for="NumberOfElements">Number of element of the testing loop</label>
+    <input asp-for="NumberOfElements" type="number" class="form-control" placeholder="Number of elements in the list to sum" step="1" value="20000000" min="1" max="2100000000">
+</div>
+
+<button type="submit">Start</button>
+</form> 
+</br>
+<p>
+    @if(result != null){
+        <h4>Foreach Time</h4> 
+        <b>@result.ForeachTime</b>
+        
+        <h4>For Time</h4>
+        <b>@result.ForTime</b>         
+        }   
+</p>
