@@ -11,6 +11,7 @@ List of recipes on concurrency and asyncronous programming in c#.
 - Aggregate Exceptions
 - Process Tasks as they complete
 - Sum in Parallel
+- ImmutableList Benchmark with for and foreach loop
 
 
 ### Prerequisitest
