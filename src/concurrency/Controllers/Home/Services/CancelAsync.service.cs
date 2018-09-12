@@ -8,26 +8,21 @@ namespace Concurrency.Services.Home
     public class CancelAsyncService
     {
         private CancellationTokenSource cts = new CancellationTokenSource();
-        private int delayBeforeFinishTest, delayBeforeCancelTest; 
-        internal async Task<string> Start(int completeTask,int timeoutTask)
+        private int delayBeforeFinishTest, delayBeforeCancelTest;
+        internal async Task<string> Start(int completeTask, int timeoutTask)
         {
             delayBeforeFinishTest = completeTask;
             delayBeforeCancelTest = timeoutTask;
 
-            string result=string.Empty;
+            string result = string.Empty;
             try
             {
-                CancellationToken token = cts.Token;
-                using (cts = CancellationTokenSource.CreateLinkedTokenSource(token))
-                {
-                    cts.CancelAfter(TimeSpan.FromSeconds(delayBeforeCancelTest));
-                    CancellationToken combinedToken = cts.Token;
-                    result = await TestAsync(combinedToken).ConfigureAwait(false);
-                }
+                result = await handleOperation();
+
             }
             catch (OperationCanceledException)
             {
-                result = $"Operation Cancelled by timeout after {delayBeforeCancelTest} {(delayBeforeCancelTest > 1  ? "seconds":"second")}";
+                result = $"Operation Cancelled by timeout after {delayBeforeCancelTest} {(delayBeforeCancelTest > 1 ? "seconds" : "second")}";
             }
             catch (Exception)
             {
@@ -37,16 +32,26 @@ namespace Concurrency.Services.Home
             return result;
         }
 
+        private async Task<string> handleOperation()
+        {
+            CancellationToken token = cts.Token;
+            using (cts = CancellationTokenSource.CreateLinkedTokenSource(token))
+            {
+                cts.CancelAfter(TimeSpan.FromSeconds(delayBeforeCancelTest));
+                CancellationToken combinedToken = cts.Token;
+                return await executeOperation(combinedToken).ConfigureAwait(false);
+            }
+        }
         internal string Cancel()
         {
             this.cts.Cancel();
             return "Operation cancel by user";
         }
 
-        public async Task<string> TestAsync(CancellationToken ct)
+        private async Task<string> executeOperation(CancellationToken ct)
         {
             await Task.Delay(TimeSpan.FromSeconds(delayBeforeFinishTest), ct).ConfigureAwait(false);
-            return $"Task Completed after {delayBeforeFinishTest} {(delayBeforeFinishTest > 1  ? "seconds":"second")}";
+            return $"Task Completed after {delayBeforeFinishTest} {(delayBeforeFinishTest > 1 ? "seconds" : "second")}";
         }
     }
 }
