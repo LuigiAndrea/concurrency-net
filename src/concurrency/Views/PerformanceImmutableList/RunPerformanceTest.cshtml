@@ -17,8 +17,8 @@
 <form asp-action="RunPerformanceTest" method="POST">
 
 <div class="form-group">
-    <label asp-for="NumberOfElements">Number of element of the testing loop</label>
-    <input asp-for="NumberOfElements" type="number" class="form-control" placeholder="Number of elements in the list to sum" step="1" value="20000000" min="1" max="2100000000">
+    <label asp-for="NumberOfElements">Steps of the loop</label>
+    <input asp-for="NumberOfElements" type="number" class="form-control" placeholder="add number of steps" step="1" value="20000000" min="1" max="2100000000">
 </div>
 
 <button type="submit">Start</button>
