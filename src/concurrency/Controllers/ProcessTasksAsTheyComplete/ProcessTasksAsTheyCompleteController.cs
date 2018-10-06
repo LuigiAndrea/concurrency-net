@@ -21,21 +21,16 @@ namespace Concurrency.Controllers
         {
             TasksSortedAsTheyAreProcessed = await ProcessTasksAsTheyCompleteSerivice.ProcessTasksAsync(tat);
 
-            setHeaders();
             setTaskResults();
             return View();
         }
 
-        private void setHeaders()
-        {
-            ViewBag.ForLoop = "Tasks processed with a loop";
-            ViewBag.InOrder = "Tasks processed as they complete";
-        }
-
         private void setTaskResults()
         {
-            ViewData["Loop"] = getValuesFromTasksSorted(TasksSortedAsTheyAreProcessed[(int)TaskProcessed.Loop]);
-            ViewData["AsTheyComplete"] = getValuesFromTasksSorted(TasksSortedAsTheyAreProcessed[(int)TaskProcessed.InOrder]); ;
+            ResultTaskProcess rtp = new ResultTaskProcess();
+            rtp.Loop = getValuesFromTasksSorted(TasksSortedAsTheyAreProcessed[(int)TaskProcessed.Loop]);
+            rtp.AsTheyComplete = getValuesFromTasksSorted(TasksSortedAsTheyAreProcessed[(int)TaskProcessed.InOrder]);
+            ViewData["Result"] = rtp;
         }
 
         private string getValuesFromTasksSorted(Task<TaskToProcess>[] tasks)

@@ -1,7 +1,9 @@
 @model TaskAndTime
+@using Concurrency.Models.ProcessTasksAsTheyComplete;
 
 @{
     ViewData["Title"] = "ProcessTaskAsTheyComplete";
+     ResultTaskProcess resultTask = ViewData["Result"] as ResultTaskProcess;
 }
 
 <h3>Enter for each task the seconds needed to complete </h3>
@@ -25,10 +27,12 @@
 
 <button type="submit">Run Tasks</button>
 </form> 
-</br>
+<br>
 <p>
-    <h4>@ViewBag.ForLoop</h4>
-    <b>@ViewData["Loop"]</b>
-    <h4>@ViewBag.InOrder</h4>
-    <b>@ViewData["AsTheyComplete"]</b>
+    @if(resultTask !=null){
+    <h4>Tasks processed with a loop</h4>
+    <b>@resultTask.Loop</b>
+    <h4>Tasks processed as they complete</h4>
+    <b>@resultTask.AsTheyComplete</b>
+    }
 </p>
