@@ -76,7 +76,7 @@ namespace Concurrency.Controllers
         public async Task<ViewResult> CancellationTokenLoop(CancellationLoop cancLoop)
         {
             CancellationTokenLoop ctl = new CancellationTokenLoop();
-            ViewData["Result"] = await ctl.StartLoop(cancLoop.TimeoutCancellationToken,cancLoop.NumberOfIterationToPerformLoop);
+            ViewData["Result"] = await ctl.StartLoop(cancLoop.TimeoutCancellationToken, cancLoop.NumberOfIterationToPerformLoop);
             return View("Index");
         }
 
@@ -85,18 +85,27 @@ namespace Concurrency.Controllers
         [HttpPost]
         public async Task<ViewResult> AggregationException(AggregationExceptions ae)
         {
-            ViewData["Result"] = await GetExceptions(ae.CatchException.Equals("All") 
+            ViewData["Result"] = await GetExceptions(ae.CatchException.Equals("All")
                                                             ? CatchExc.All : CatchExc.One);
             return View("Index");
         }
 
-        public IActionResult About() => View();
+        public IActionResult About() => View(new List<string>() { 
+                                            "Task Completion Source",
+                                            "Task FromResult",
+                                            "Retry",
+                                            "CreateLinkedTokenSource",
+                                            "ThrowIfCancellationRequested",
+                                            "Aggregate Exceptions",
+                                            "Process Tasks as they complete",
+                                            "Sum in Parallel",
+                                            "ImmutableList Benchmark with for and foreach loop"});
 
         public IActionResult Contact() => View();
 
         public IActionResult Error()
         {
-            logger.LogError($"An error occurred while processing your request. - {Request.Path}" );
+            logger.LogError($"An error occurred while processing your request. - {Request.Path}");
             return View();
         }
     }
