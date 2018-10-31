@@ -45,7 +45,7 @@ namespace Concurrency.Services.Home
         internal string Cancel()
         {
             this.cts.Cancel();
-            return "Operation cancel by user";
+            return "Operation cancelled by user";
         }
 
         private async Task<string> executeOperation(CancellationToken ct)
