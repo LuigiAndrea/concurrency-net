@@ -51,11 +51,52 @@ namespace Concurrency
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                        {                          
+                            routes.MapRoute(
+                                name: "sync_task",
+                                template: "Home/SynchTasks/{action:regex(^GetFromResult$|^GetTaskCompletionSource$)}",
+                                defaults: new { controller = "Home" });
+
+                            routes.MapRoute(
+                                name: "Retry",
+                                template: "SimulationRetry",
+                                defaults: new { controller = "Home", action = "Retry" });
+
+                            routes.MapRoute(
+                                name: "RetryResult",
+                                template: "SimulationRetryResult",
+                                defaults: new { controller = "Home", action = "DownloadWithRetry" });
+
+                            routes.MapRoute(
+                                name: "LinkedToken",
+                                template: "LinkedToken",
+                                defaults: new { controller = "Home", action = "CancelAsync" });
+
+                            routes.MapRoute(
+                                name: "LinkedTokenStart",
+                                template: "LinkedTokenResult",
+                                defaults: new { controller = "Home", action = "StartAsyncCode" });
+
+                            routes.MapRoute(
+                                name: "LinkedTokenCancel",
+                                template: "LinkedTokenResult",
+                                defaults: new { controller = "Home", action = "CancelAsyncCode" });
+
+                            routes.MapRoute(
+                                name: "Throw",
+                                template: "Throw/CancellationToken",
+                                defaults: new { controller = "Home", action = "CancellationTokenLoop" });
+
+                            routes.MapRoute(
+                                name: "ex_task",
+                                template: "MultipleTasks/Aggregation",
+                                defaults: new { controller = "Home", action = "AggregationException" });
+
+                            routes.MapRoute(
+                                name: "default",
+                                template: "{controller=Home}/{action=Index}/{id?}");
+
+                        });
         }
     }
 }
