@@ -1,42 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+
 
 namespace Concurrency
 {
-    public class Startup
-    {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
-
-        public IConfigurationRoot Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // Add framework services.
-            services.AddMvc();
+       public class Startup {
+        public void ConfigureServices(IServiceCollection services) {        
+           services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -49,52 +26,52 @@ namespace Concurrency
             }
 
             app.UseStaticFiles();
-
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(routes =>
                         {                          
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "sync_task",
-                                template: "Home/SynchTasks/{action:regex(^GetFromResult$|^GetTaskCompletionSource$)}",
+                                pattern: "Home/SynchTasks/{action:regex(^GetFromResult$|^GetTaskCompletionSource$)}",
                                 defaults: new { controller = "Home" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "Retry",
-                                template: "SimulationRetry",
+                                pattern: "SimulationRetry",
                                 defaults: new { controller = "Home", action = "Retry" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "RetryResult",
-                                template: "SimulationRetryResult",
+                                pattern: "SimulationRetryResult",
                                 defaults: new { controller = "Home", action = "DownloadWithRetry" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "LinkedToken",
-                                template: "LinkedToken",
+                                pattern: "LinkedToken",
                                 defaults: new { controller = "Home", action = "CancelAsync" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "LinkedTokenStart",
-                                template: "LinkedTokenResult",
+                                pattern: "LinkedTokenResult",
                                 defaults: new { controller = "Home", action = "StartAsyncCode" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "LinkedTokenCancel",
-                                template: "LinkedTokenResult",
+                                pattern: "LinkedTokenResult",
                                 defaults: new { controller = "Home", action = "CancelAsyncCode" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "Throw",
-                                template: "Throw/CancellationToken",
+                                pattern: "Throw/CancellationToken",
                                 defaults: new { controller = "Home", action = "CancellationTokenLoop" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "ex_task",
-                                template: "MultipleTasks/Aggregation",
+                                pattern: "MultipleTasks/Aggregation",
                                 defaults: new { controller = "Home", action = "AggregationException" });
 
-                            routes.MapRoute(
+                            routes.MapControllerRoute(
                                 name: "default",
-                                template: "{controller=Home}/{action=Index}/{id?}");
+                                pattern: "{controller=Home}/{action=Index}/{id?}");
 
                         });
         }
