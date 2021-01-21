@@ -6,14 +6,16 @@ using Microsoft.Extensions.Hosting;
 
 namespace Concurrency
 {
-       public class Startup {
-        public void ConfigureServices(IServiceCollection services) {        
-           services.AddControllersWithViews();
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {          
+        {   
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -27,8 +29,9 @@ namespace Concurrency
 
             app.UseStaticFiles();
             app.UseRouting();
+
             app.UseEndpoints(routes =>
-                        {                          
+                        {
                             routes.MapControllerRoute(
                                 name: "sync_task",
                                 pattern: "Home/SynchTasks/{action:regex(^GetFromResult$|^GetTaskCompletionSource$)}",
