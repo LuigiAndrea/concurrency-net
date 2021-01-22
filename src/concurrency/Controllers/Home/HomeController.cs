@@ -53,10 +53,10 @@ namespace Concurrency.Controllers
             return View("Index");
         }
 
-        public IActionResult CancelAsync() => View();
+        public IActionResult LinkedToken() => View();
 
         [HttpPost]
-        public async Task<ViewResult> StartAsyncCode(CancelAsync ca)
+        public async Task<ViewResult> StartAsyncCode(LinkedToken ca)
         {
             CancelAsyncService c = new CancelAsyncService();
             ViewData["Result"] = await c.Start(ca.delayCompleteTask, ca.delayCancelTask);

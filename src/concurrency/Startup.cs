@@ -50,7 +50,7 @@ namespace Concurrency
                             routes.MapControllerRoute(
                                 name: "LinkedToken",
                                 pattern: "LinkedToken",
-                                defaults: new { controller = "Home", action = "CancelAsync" });
+                                defaults: new { controller = "Home", action = "LinkedToken" });
 
                             routes.MapControllerRoute(
                                 name: "LinkedTokenStart",
